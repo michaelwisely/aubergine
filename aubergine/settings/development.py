@@ -5,6 +5,7 @@ These settings should **NOT** be used to deploy
 import aubergine.settings.defaults as default_settings
 from aubergine.settings.defaults import *
 
+
 # Choose which site we're using. initial_data.yaml installs some
 # fixture data so that localhost:8000 has SIDE_ID == 1, and
 # megaminerai.com has SITE_ID == 2
@@ -28,28 +29,6 @@ CACHES = {
         'LOCATION': os.path.join(VAR_DIR, "cache", "development.cache"),
     }
 }
-
-##############################################################################
-#
-# Django Debug Toolbar Settings
-#
-##############################################################################
-
-# Config for Django Debug Toolbar
-INTERNAL_IPS = ('127.0.0.1',)
-
-DEBUG_TOOLBAR_CONFIG = {
-    'INTERCEPT_REDIRECTS': False,
-}
-
-MIDDLEWARE_CLASSES = default_settings.MIDDLEWARE_CLASSES + (
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
-)
-
-INSTALLED_APPS = default_settings.INSTALLED_APPS + (
-    'debug_toolbar',
-)
-
 
 LOGGING = {
     'version': 1,

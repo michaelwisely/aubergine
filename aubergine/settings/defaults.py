@@ -62,17 +62,8 @@ CRISPY_TEMPLATE_PACK = 'bootstrap'
 # Celery settings
 #
 ##########################################################################
-import djcelery
-djcelery.setup_loader()
 
-try:
-    BROKER_URL
-except NameError:
-    BROKER_URL = 'django://'
-
-CELERY_ACCEPT_CONTENT = ['json']
-CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
-
+# All Celery settings should be in celeryconfig.py
 
 ##########################################################################
 #
@@ -245,8 +236,7 @@ INSTALLED_APPS = (
     # django-crispy-forms
     'crispy_forms',
 
-    # Celery integration for Django
-    'djcelery',
+    # Celery broker for Django
     'kombu.transport.django',
 
      # Adds gunicorn management commands
