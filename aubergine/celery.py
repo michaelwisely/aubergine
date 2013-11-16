@@ -6,7 +6,9 @@ from celery import Celery
 app = Celery('aubergine')
 app.config_from_object('aubergine.settings.celeryconfig')
 app.autodiscover_tasks(['aubergine'], related_name='tasks')
-app.setup_security()
+
+# For message signing
+# app.setup_security()
 
 
 @app.task(bind=True)
