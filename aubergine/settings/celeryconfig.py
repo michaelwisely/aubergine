@@ -7,32 +7,6 @@ BUILDOUT_DIR = os.path.dirname(PROJECT_DIR)
 VAR_DIR = os.path.join(BUILDOUT_DIR, "var")
 
 
-##########################################################################
-#
-# Secret settings
-#
-##########################################################################
-
-# If a secret_settings file isn't defined, open a new one and save a
-# SECRET_KEY in it. Then import it. All passwords and other secret
-# settings should be stored in secret_settings.py. NOT in settings.py
-try:
-
-    from secret_settings import CELERY_SECURITY_KEY
-    from secret_settings import CELERY_SECURITY_CERTIFICATE
-    from secret_settings import CELERY_SECURITY_CERT_STORE
-except ImportError:
-    sys.stderr.write("""
-        Couldn't load CELERY_SECURITY_* settings from secret_settings.py.
-        Check to be sure that the following settings are defined:
-
-            CELERY_SECURITY_KEY
-            CELERY_SECURITY_CERTIFICATE
-            CELERY_SECURITY_CERT_STORE
-
-        This may require generating some SSL keys and certificates.\n\n""")
-    sys.exit(1)
-
 
 ##########################################################################
 #
@@ -59,7 +33,7 @@ CELERY_RESULT_SERIALIZER = 'json'
 #
 ##########################################################################
 
-CELERY_TASK_SERIALIZER = 'auth'
+CELERY_TASK_SERIALIZER = 'json'
 
 
 ##########################################################################
@@ -68,7 +42,7 @@ CELERY_TASK_SERIALIZER = 'auth'
 #
 ##########################################################################
 
-CELERY_ACCEPT_CONTENT = ['json', 'auth']
+CELERY_ACCEPT_CONTENT = ['json']
 
 
 ##########################################################################
@@ -86,7 +60,21 @@ CELERYBEAT_SCHEDULE_FILENAME = 'var/db/celery-schedule.db'
 #
 ##########################################################################
 
-# Should be set in secret_settings.py
-# CELERY_SECURITY_KEY = ""
-# CELERY_SECURITY_CERTIFICATE = ""
-# CELERY_SECURITY_CERT_STORE = ""
+# Try to load CELERY_SECURITY_* settings from secret_settings.py. If
+# they're not there, throw an error and exit.
+try:
+    if CELERY_TASK_SERIALIZER == 'auth':
+        from secret_settings import CELERY_SECURITY_KEY
+        from secret_settings import CELERY_SECURITY_CERTIFICATE
+        from secret_settings import CELERY_SECURITY_CERT_STORE
+except ImportError:
+    sys.stderr.write("""
+        Couldn't load CELERY_SECURITY_* settings from secret_settings.py.
+        Check to be sure that the following settings are defined:
+
+            CELERY_SECURITY_KEY
+            CELERY_SECURITY_CERTIFICATE
+            CELERY_SECURITY_CERT_STORE
+
+        This may require generating some SSL keys and certificates.\n\n""")
+    sys.exit(1)
