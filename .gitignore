@@ -38,3 +38,6 @@ versions.cfg
 
 # Ignore package downloads
 downloads/
+
+# Ignore PID files
+*.pid
