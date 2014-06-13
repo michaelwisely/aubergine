@@ -14,7 +14,7 @@ VAR_DIR = os.path.join(BUILDOUT_DIR, "var")
 #
 ##########################################################################
 
-BROKER_URL = 'mongodb://127.0.0.1/celery'
+BROKER_URL = 'mongodb://192.168.1.4/celery'
 
 
 ##########################################################################
@@ -23,7 +23,7 @@ BROKER_URL = 'mongodb://127.0.0.1/celery'
 #
 ##########################################################################
 
-CELERY_RESULT_BACKEND = 'mongodb://127.0.0.1/celery_results'
+CELERY_RESULT_BACKEND = 'mongodb://192.168.1.4/celery_results'
 CELERY_RESULT_SERIALIZER = 'json'
 
 
